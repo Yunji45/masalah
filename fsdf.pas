@@ -19,13 +19,13 @@ var dataMhs:array [1..100] of mhs;
     z,total,tinggi,rendah: real;
     Namauser, Pass :string;
     ulang : char;
-    label awal;
 
 procedure buka_database;
 begin
     assign(database,'data.txt');{$I-}
     reset(database);{$I+}
 end;
+
 
 procedure login;
 begin
@@ -55,55 +55,40 @@ end;
 
 procedure otomatis;
 begin
-  assign(database,'database.txt');
-  rewrite (database);
-  reset(database);
-  clrscr;
-  write('Masukkan Jumlah Data : '); readln(n);
-  clrscr;
-  for i:=1 to n do
-  with dataMhs[i] do
-  begin
-    awal :
-    writeln('Data ke-',i);
-    write('Nama  : '); readln(nama);
-    write('NIM   : '); readln(nim);
-    write('Kehadiran : ');readln(kehadiran);
-    write('UTS : '); readln(uts);
-    write('UAS : ');readln(uas);
-    write('Apakah ingin input ulang ? : ');readln(ulang);
-    while (ulang = 'y') OR (ulang = 'Y') do
-     begin
-     otomatis;
-     end;
+    write('Masukkan Jumlah Data : '); readln(n);
+    clrscr; randomize; 
+    with dataMhs[i] do
+    for i:= 1 to n do
+    begin
+      writeln('Nama : ', CHR(100));
+      writeln('NIM   : ',random(10000));
+      writeln('Kehadiran : ',random(16));
+      writeln('UTS : ',random(100));
+      writeln('UAS : ',random(100));
       na:=(uas+uts);
       rata:= (uas+uts) div 3;
-
-
-                     if (rata <= 100) and (rata >=80) then
-                     grade:='A'
-                     else
-                     if (rata <= 79) and (rata >=60) then
-                     grade:='B'
-                     else
-                     if (rata <= 59) and (rata >=40) then
-                     grade:='C'
-                     else
-                     if (rata <= 39) and (rata >=20) then
-                     grade:='D'
-                     else
-                     if (rata <= 19) and (rata >=0) then
-                     grade:='E';
-
-    writeln;
-  end;
-  readkey;
-end;
+      if (rata <= 100) and (rata >=80) then
+      grade:='A'
+      else
+      if (rata <= 79) and (rata >=60) then
+      grade:='B'
+      else
+      if (rata <= 59) and (rata >=40) then
+      grade:='C'
+      else
+      if (rata <= 39) and (rata >=20) then
+      grade:='D'
+      else
+      if (rata <= 19) and (rata >=0) then
+      grade:='E';
+    end;
+    readkey;
+   end;
 
 procedure ngacak;
 begin
   buka_database;
-  clrscr;
+  clrscr;randomize;
   writeln('========================DAFTAR NILAI OTOMATIS=====================');
   writeln(' _________________________________________________________________');
   writeln('| NO |    NIM    |  NAMA      | Kehadiran|UTS | UAS  |N.A |Indeks | ');
@@ -114,11 +99,11 @@ begin
     begin
       writeln('|    |           |            |     |      |    |          |');
       gotoxy(3,i+3); writeln(i);
-      gotoxy(8,i+3); writeln(nim);
-      gotoxy(20,i+3); writeln(nama);
-      gotoxy(32,i+3); writeln(kehadiran);
-      gotoxy(43,i+3); writeln(uts);
-      gotoxy(50,i+3); writeln(uas);
+      gotoxy(8,i+3); writeln(random(1000));
+      gotoxy(20,i+3); writeln(CHR(100));
+      gotoxy(32,i+3); writeln(random(16));
+      gotoxy(43,i+3); writeln(random(100));
+      gotoxy(50,i+3); writeln(random(100));
       gotoxy(55,i+3); writeln(na);
       gotoxy(60,i+3); writeln(grade);
       
@@ -198,7 +183,7 @@ begin
   readkey;
 end;
 
-procedure output;
+procedure ouput;
 begin
 buka_database;
   clrscr;
@@ -262,7 +247,7 @@ begin
   writeln('4.laporan otomatis');
   writeln('masukan angka: ');readln(angka);
   input;
-  output;
+  ouput;
   otomatis;
   ngacak;
 
